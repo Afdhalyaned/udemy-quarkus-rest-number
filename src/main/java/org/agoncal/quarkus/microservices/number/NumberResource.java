@@ -1,5 +1,7 @@
 package org.agoncal.quarkus.microservices.number;
 
+import org.eclipse.microprofile.openapi.annotations.Operation;
+import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 import org.jboss.logging.Logger;
 
 import javax.inject.Inject;
@@ -12,11 +14,16 @@ import java.util.Random;
 
 
 @Path("/api/numbers")
+@Tag(name = "Number REST Endpoint")
 public class NumberResource {
     @Inject
     Logger logger;
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @Operation(
+            summary = "Generate book numbers",
+            description = "ISBN 13 and ESBN 10 numbers"
+    )
     public IsbnNumbers generateIsbnNumbers() {
         IsbnNumbers isbnNumbers = new IsbnNumbers();
         isbnNumbers.isbn13 = "13-" + new Random().nextInt(100_000_000);
